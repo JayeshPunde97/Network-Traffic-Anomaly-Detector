@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — Traffic Anomaly Detector{% endblock %}
+{% block content %}
+  <h1>Dashboard</h1>
+  <div class="cards">
+    <div class="card">
+      <div class="card-value">{{ stats.total_flows }}</div>
+      <div class="card-label">Traffic Flows Analyzed</div>
+    </div>
+    <div class="card">
+      <div class="card-value">{{ stats.total_packets }}</div>
+      <div class="card-label">Total Packets</div>
+    </div>
+    <div class="card card-alert">
+      <div class="card-value">{{ stats.total_anomalies }}</div>
+      <div class="card-label">Anomalies Flagged</div>
+    </div>
+  </div>
+
+  <h2>Anomalies by Type</h2>
+  <table>
+    <tr><th>Type</th><th>Count</th></tr>
+    {% for row in stats.by_type %}
+    <tr>
+      <td>{{ row.anomaly_type }}</td>
+      <td>{{ row.cnt }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <h2>Most Recent Anomalies</h2>
+  <table>
+    <tr><th>Time</th><th>Type</th><th>Source</th><th>Destination</th><th>Severity</th><th>Detail</th></tr>
+    {% for a in recent_anomalies %}
+    <tr class="sev-{{ a.severity|lower }}">
+      <td>{{ fmt_time(a.detected_at) }}</td>
+      <td>{{ a.anomaly_type }}</td>
+      <td>{{ a.src_ip }}</td>
+      <td>{{ a.dst_ip }}</td>
+      <td>{{ a.severity }}</td>
+      <td>{{ a.detail }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <p><a href="/anomalies">View all anomalies →</a></p>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Traffic Flows — Traffic Anomaly Detector{% endblock %}
+{% block content %}
+  <h1>Traffic Flows</h1>
+  <p class="muted">Aggregated by source, destination, and protocol. Sorted by packet count.</p>
+  <table>
+    <tr><th>Source IP</th><th>Destination IP</th><th>Protocol</th><th>Packets</th><th>First Seen</th><th>Last Seen</th></tr>
+    {% for f in flows %}
+    <tr>
+      <td>{{ f.src_ip }}</td>
+      <td>{{ f.dst_ip }}</td>
+      <td>{{ f.protocol }}</td>
+      <td>{{ f.packet_count }}</td>
+      <td>{{ fmt_time(f.first_seen) }}</td>
+      <td>{{ fmt_time(f.last_seen) }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
