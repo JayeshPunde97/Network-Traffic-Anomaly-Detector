@@ -6,9 +6,6 @@ aggregates it, and applies threshold-based rules to flag anomalous
 behaviour: port scans, SYN floods, and high-volume bursts from a single
 source (e.g. amplification-style floods).
 
-This is the detection logic at the heart of the project. It is
-intentionally rule/threshold-based (not machine learning) so the logic
-is transparent and easy to explain and defend in an interview.
 
 Run:
     python3 analyze_traffic.py sample_data/sample_capture.pcap
